@@ -2,11 +2,20 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use((req, res, next) => {
   //   req.timeRequest = Date.now();
   console.log(req.method, req.url);
   next();
+});
+
+app.use((req, res, next) => {
+  const { password } = req.query;
+  if (password === "tabuni") {
+    next();
+  } else {
+    res.send("anda perlu masukan password");
+  }
 });
 
 app.get("/", (req, res) => {
@@ -17,6 +26,10 @@ app.get("/halaman", (req, res) => {
   console.log(req.timeRequest);
   res.send("Hello halaman");
 });
+
+app.get("/admin", (req, res) => {  
+    res.send("Hello admin");    
+})
 
 app.use((req, res) => {
   res.status(404).send("Page not found");
