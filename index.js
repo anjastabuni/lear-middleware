@@ -9,14 +9,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
+const auth = (req, res, next) => {
   const { password } = req.query;
   if (password === "tabuni") {
     next();
   } else {
     res.send("anda perlu masukan password");
   }
-});
+};
 
 app.get("/", (req, res) => {
   res.send("Hello Wordl");
@@ -27,9 +27,9 @@ app.get("/halaman", (req, res) => {
   res.send("Hello halaman");
 });
 
-app.get("/admin", (req, res) => {  
-    res.send("Hello admin");    
-})
+app.get("/admin", auth, (req, res) => {
+  res.send("Hello admin");
+});
 
 app.use((req, res) => {
   res.status(404).send("Page not found");
