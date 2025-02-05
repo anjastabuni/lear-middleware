@@ -40,6 +40,13 @@ app.use((req, res) => {
   res.status(404).send("Page not found");
 });
 
+app.use((err, req, res, next) => {
+  console.log("*************************");
+  console.log("**********ERROR**********");
+  console.log("*************************");
+  next(err);
+});
+
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
