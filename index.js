@@ -14,7 +14,8 @@ const auth = (req, res, next) => {
   if (password === "tabuni") {
     next();
   } else {
-    res.send("anda perlu masukan password");
+    // res.send("anda perlu masukan password");
+    throw new Error("anda perlu masukan password");
   }
 };
 
@@ -25,6 +26,10 @@ app.get("/", (req, res) => {
 app.get("/halaman", (req, res) => {
   console.log(req.timeRequest);
   res.send("Hello halaman");
+});
+
+app.get("/error", (req, res) => {
+  bird.fly();
 });
 
 app.get("/admin", auth, (req, res) => {
